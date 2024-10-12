@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <base href="/">
     <style>
         body {
             font-family: sans-serif;
@@ -161,7 +160,6 @@
                 .querySelector('style')
                 .cloneNode(true)
             )
-            console.log(this.displayName, this.template)
             shadowRoot.appendChild(new DOMParser()
                 .parseFromString(this.template, 'text/html')
                 .querySelector('template')
@@ -194,7 +192,9 @@
     booths.forEach(b => document.body.appendChild(new Booth(b)))
 
 </script>
-<script src="nav/nav.js"></script>
+<script src="/nav/nav.js"></script>
+<script src="https://mattgoral.github.io/uccb_fair_24/nav/nav.js"></script>
+
 <!--<nav>-->
 <!--    <div id="yankee-fair">Yankee Fair</div>-->
 <!--</nav>-->
