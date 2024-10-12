@@ -10,22 +10,7 @@
             margin: 0;
             padding: 10vh 0 0 0;
         }
-        #yankee-fair {
-            font-family: serif;
-            flex-grow: 1;
-            letter-spacing: -2px;
-            font-size: 3em;
-        }
-        nav {
-            position: fixed;
-            background: white;
-            border-bottom: 1px solid #999;
-            display: flex;
-            top: 0;
-            left: 0;
-            width: 90vw;
-            padding: 2vh 5vw;
-        }
+
     </style>
 </head>
 <body>
@@ -209,9 +194,9 @@
     booths.forEach(b => document.body.appendChild(new Booth(b)))
 
 </script>
-
-<nav>
-    <div id="yankee-fair">Yankee Fair</div>
-</nav>
+<script src="nav/nav.js"></script>
+<!--<nav>-->
+<!--    <div id="yankee-fair">Yankee Fair</div>-->
+<!--</nav>-->
 </body>
 </html>
