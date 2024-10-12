@@ -7,13 +7,8 @@
     <style>
         body {
             font-family: sans-serif;
-            font-size: 2em;
             margin: 0;
-            padding: 15vh 0 0 0;
-        }
-        img {
-            padding: 1vh 5vw;
-            height: 8vh;
+            padding: 6vh 0 0 0;
         }
         #yankee-fair {
             font-family: serif;
@@ -28,85 +23,192 @@
             top: 0;
             left: 0;
             width: 90vw;
-            padding: 5vh 5vw;
-        }
-        h2 {
-            font-weight: bold;
-            padding: 0 5vw;
-            background: #eee;
-        }
-        h2 > a {
-            float: right;
-            font-size: .5em;
-            line-height: 2em;
-        }
-        p {
-            margin: 2vh 5vw 12vh 5vw;
-            line-height: 2em;
+            padding: 2vh 5vw;
         }
     </style>
 </head>
 <body>
+<script>
+    const locations = {
+        barn: {i:'nftGC56p51pmZbhG8', n:'Barn'},
+        parsonage: {i:'gjvJUC8UixNaFLtT6', n:'Parsonage'},
+        lowerLot: {i:'dMfV8wkKRnKf3Uxv9', n:'Lower Parking Lot'},
+        lowerLevel: {i:'7o7KVBYPkCsYkxQX6', n:'Inside Lower Level'},
+        upperLevel: {i:'mhyBH9yboV5h47598', n:'Inside Upper Level'},
+        courtyard: {i:'VfMEzUcBYbPtPALk7', n:'Courtyard'},
+        sanctuary: {i:'NwXLodhPenUWUwo8A', n:'Sanctuary'}
+    }
+    function location_link(location) {
+        return `https://maps.app.goo.gl/${location}`
+    }
+    const booths = [
+        {
+            displayName: 'Autumn Harvest',
+            gmap: locations.courtyard,
+            desc: 'It’s time for the harvest!<br>Come see our beautiful selection of mums, pumpkins, gourds and local honey.'
+        }, {
+            displayName: 'Bake Shop',
+            gmap: locations.upperLevel,
+            desc: 'Bring something home or enjoy it at the fair!  Fresh baked cakes, cookies, pies and other delicious treats. There are even Gluten Free options!'
+        }, {
+            displayName: 'Barn',
+            gmap: locations.barn,
+            desc: 'You just have to see it!  Our barn and surrounding grounds are stuffed with huge bargains.  I am sure there is something you need! (Or just want)'
+        }, {
+            displayName: 'Cheese Booth',
+            gmap: locations.lowerLevel,
+            desc: 'Indulge in the rich, creamy goodness of our aged cheddar cheese—perfectly balanced with sharpness and a hint of nuttiness.'
+        }, {
+            displayName: 'Coffee Shop',
+            gmap: locations.lowerLevel,
+            desc: 'Take a break and visit our coffee shop, where the aroma of freshly brewed coffee meets an irresistible selection of homemade snacks.'
+        }, {
+            displayName: 'Fudge Shop',
+            gmap: locations.lowerLevel,
+            desc: 'Treat yourself to our amazing fudge from a local shop.  We have many kinds available; you will have to try them all!'
+        }, {
+            displayName: 'Garden Shop',
+            gmap: locations.courtyard,
+            desc: 'Enjoy looking through a beautiful selection of plants, and flowers. There must be something you can’t go home without!'
+        }, {
+            displayName: 'Grill',
+            gmap: locations.lowerLot,
+            desc: 'Early visitors come get your egg sandwich to get the morning going.  Ready for lunch?  Come to the grill and enjoy hot dogs, hamburgers and other items.'
+        }, {
+            displayName: 'Quilts',
+            gmap: locations.upperLevel,
+            desc: 'Amazing finely crafted handmade quilts.  You really need to see these!'
+        }, {
+            displayName: 'Second Hand Rose',
+            gmap: locations.parsonage,
+            desc: 'Need your new fall wardrobe?  Come look through our fine selection of gently used clothes.'
+        }, {
+            displayName: 'SERRV',
+            gmap: locations.upperLevel,
+            desc: 'Fair trade gifts, handmade crafts & foods sourced globally from artisans around the world.'
+        }, {
+            displayName: 'She Shed',
+            gmap: locations.upperLevel,
+            desc: 'Who needs a "Man Cave" when you can visit the "She Shed" - A boutique style set up of jewelry, purses, scarves and beautiful items to spoil yourself or find a gift.'
+        }, {
+            displayName: 'Silent Auction',
+            gmap: locations.sanctuary,
+            desc: 'Who will place the highest bid and win the prize?  Come see the huge variety of items at the auction and place your best bid.  Good luck!'
+        }, {
+            displayName: 'Used Books',
+            gmap: locations.lowerLevel,
+            desc: 'We finished reading these, now it\'s your turn!  Select from thousands of titles at super bargain prices!'
+        }, {
+            displayName: 'White Steeple Inn',
+            gmap: locations.sanctuary,
+            desc: ''
+        }
+    ]
+
+    class Booth extends HTMLElement {
+        TOGGLE_EL = 'inner'
+        style = `<style>
+            #${this.TOGGLE_EL} {
+                max-height: 0;
+                overflow: hidden;
+                transition: all .1s;
+            }
+            #${this.TOGGLE_EL}.open {
+                max-height: 1000vh;
+            }
+            #booth {
+                padding: 2vh 5vw;
+                border-bottom: 1px solid #aaa;
+            }
+            #booth-name {
+                font-size: 2em;
+                font-weight: bold;
+            }
+            #location {
+                display: flex;
+                padding: 2vh 0;
+            }
+            #loc-icon {
+                height: .8em;
+                margin: .1em 5px 0 0;
+            }
+            #loc-icon > path { fill: #777 }
+            #gmap > a {
+                color: #777;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            #desc {
+                line-height: 2em;
+            }
+
+        </style>`
+
+        template = `<template>
+            <div id="booth">
+                <div id="booth-name" class="button">
+                    <slot name="displayName"></slot>
+                </div>
+                <div id="inner">
+                    <div id="location">
+                        <svg id="loc-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                            <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
+                        </svg>
+                        <div id="gmap"></div>
+                    </div>
+                    <div id="desc">
+                        <slot name="desc"></slot>
+                    </div>
+                </div>
+            </div>
+        </template>`
+
+
+        constructor(b) {
+            super();
+            this.open = false
+            const shadowRoot = this.attachShadow({ mode: "open" });
+            shadowRoot.appendChild(new DOMParser()
+                .parseFromString(this.style, 'text/html')
+                .querySelector('style')
+                .cloneNode(true)
+            )
+            console.log(this.displayName, this.template)
+            shadowRoot.appendChild(new DOMParser()
+                .parseFromString(this.template, 'text/html')
+                .querySelector('template')
+                .content
+                .cloneNode(true)
+            )
+            this.appendChild(this.displayName = document.createElement('span'))
+            this.displayName.slot = 'displayName'
+            this.displayName.innerHTML = b.displayName
+
+            shadowRoot.getElementById('gmap').appendChild(this.gmap = document.createElement('a'))
+            this.gmap.innerHTML = b.gmap.n
+            this.gmap.href = location_link(b.gmap.i)
+            this.gmap.target = '_blank'
+
+            this.appendChild(this.desc = document.createElement('span'))
+            this.desc.slot = 'desc'
+            this.desc.innerHTML = b.desc
+
+            shadowRoot.querySelector('.button').onclick = this.toggle.bind(this)
+
+        }
+        toggle() {
+            this.open = !this.open
+            let e = this.shadowRoot.getElementById(this.TOGGLE_EL)
+            return this.open ? e.classList.add('open') : e.classList.remove('open')
+        }
+    }
+    customElements.define("uccb-booth", Booth);
+    booths.forEach(b => document.body.appendChild(new Booth(b)))
+
+</script>
+
 <nav>
     <div id="yankee-fair">Yankee Fair</div>
-    <a href="https://www.google.com/maps/d/edit?mid=1mldhwwwCzmdTcFJTOsYLLCWeeL9K-iY&usp=sharing" target="_blank">MAP</a>
 </nav>
-    <h2>
-        Autumn Harvest
-        <a id="courtyard" href="https://maps.app.goo.gl/VfMEzUcBYbPtPALk7" target="_blank">Show on map</a>
-    </h2>
-    <p>It’s time for the harvest!  Come see our beautiful selection of mums,  pumpkins, gourds and local honey.</p>
-
-    <h2>
-        Bake Shop
-        <a id="upper-level" href="https://maps.app.goo.gl/mhyBH9yboV5h47598" target="_blank">Show on map</a>
-    </h2>
-    <p>Bring something home or enjoy it at the fair!  Fresh baked cakes, cookies, pies and other delicious treats. There are even Gluten Free options!</p>
-
-    <h2>
-        Barn
-        <a id="barn" href="https://www.google.com/maps/place/41%C2%B027'52.2%22N+73%C2%B023'17.2%22W" target="_blank">Show on map</a>
-    </h2>
-    <p>You just have to see it!  Our barn and surrounding grounds are stuffed with huge bargains.  I am sure there is something you need! (Or just want)</p>
-
-    <h2>
-        Cheese Booth
-        <a id="lower-level" href="https://maps.app.goo.gl/7o7KVBYPkCsYkxQX6" target="_blank">Show on map</a>
-    </h2>
-    <p>Indulge in the rich, creamy goodness of our aged cheddar cheese—perfectly balanced with sharpness and a hint of nuttiness</p>
-
-    <h2>Coffee Shop</h2>
-    <p>Take a break and visit our coffee shop, where the aroma of freshly brewed coffee meets an irresistible selection of homemade snacks.</p>
-
-    <h2>Fudge Shop</h2>
-    <p>Treat yourself to our amazing fudge from a local shop.  We have many kinds available; you will have to try them all!</p>
-
-    <h2>Garden Shop</h2>
-    <p>Enjoy looking through a beautiful selection of plants, and flowers. There must be something you can’t go home without!</p>
-
-    <h2>Grill</h2>
-    <p>Early visitors come get your egg sandwich to get the morning going.  Ready for lunch?  Come to the grill and enjoy hot dogs, hamburgers and other items.</p>
-
-    <h2>Quilts</h2>
-    <p>Amazing finely crafted handmade quilts.  You really need to see these!</p>
-
-    <h2>Second Hand Rose</h2>
-    <p>Need your new fall wardrobe?  Come look through our fine selection of gently used clothes.</p>
-
-    <h2>SERRV</h2>
-    <p>Fair trade gifts, handmade crafts & foods sourced globally from artisans around the world.</p>
-
-    <h2>She Shed</h2>
-    <p>Who needs a "Man Cave" when you can visit the "She Shed" - A boutique style set up of jewelry, purses, scarves and beautiful items to spoil yourself or find a gift.</p>
-
-    <h2>Silent Auction</h2>
-    <p>Who will place the highest bid and win the prize?  Come see the huge variety of items at the auction and place your best bid.  Good luck!</p>
-
-    <h2>Used Books</h2>
-    <p>We finished reading these, now it's your turn!  Select from thousands of titles at super bargain prices!</p>
-
-    <h2>White Steeple Inn</h2>
-    <p>While enjoying the fair, take some time to sit down and relax and enjoy a tasty lunch served at your table or get takeout if you want to stay on the move!</p>
-
 </body>
 </html>
