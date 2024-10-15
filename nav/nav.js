@@ -14,17 +14,22 @@ class UccbNav extends HTMLElement {
             line-height: 8vh;
             padding-left: 5vw;
         }
+        #yankee-fair a {
+            text-decoration: none;
+            color: #433;
+        }
         #menu-button {
             font-size: 2em;
             font-weight: 900;
             line-height: 8vh;
             letter-spacing: -.1em;
             padding-right: 5vw;
+            color: #433;
         }
         #nav-bg {
             position: fixed;
-            background: #674138;
-            border-bottom: 1px solid #999;
+            background: white;
+            border-bottom: 1px solid #a99;
             display: flex;
             top: 0;
             left: 0;
@@ -32,7 +37,6 @@ class UccbNav extends HTMLElement {
             z-index: 2;
         }
         
-
         #menu {
           z-index: 1;
           display: flex;
@@ -57,7 +61,8 @@ class UccbNav extends HTMLElement {
         }
         
         #menu a {
-            text-decoration: none
+            text-decoration: none;
+            color: #433;
         }
         
         #menu.open { transform: none }
@@ -65,13 +70,15 @@ class UccbNav extends HTMLElement {
 
     template = `<template>
         <div id="nav-bg">
-            <div id="yankee-fair">Yankee Fair</div>
+            <div id="yankee-fair">
+                <a href="/">Yankee Fair</a>
+            </div>
             <div id="menu-button">MENU</div>
         </div>
         <div id="menu">
-            <div><a href="#">About</a></div>
-            <div><a href="booths.html">Directory</a></div>
-            <div><a href="#">Map</a></div>
+            <div><a href="partners.html">Partners</a></div>
+            <div><a href="directory.html">Directory</a></div>
+            <div><a href="map.pdf" target="_blank">Map</a></div>
         </div>
     </template>`
     constructor(open= false) {

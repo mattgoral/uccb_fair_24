@@ -3,3 +3,10 @@ body {
     margin: 0;
     padding: 10vh 0 0 0;
 }
+.charity {
+    width: 50vw;
+    margin: 5vh 25vw;
+}
+.fineprint {
+    padding: 5vh 5vw;
+}

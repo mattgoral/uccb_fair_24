@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Directory</title>
     <base href="https://mattgoral.github.io/uccb_fair_24/">
     <link rel="stylesheet" href="main.css">
 </head>
@@ -119,7 +119,7 @@
                 font-size: 2em;
             }
             #desc {
-                line-height: 2em;
+                line-height: 1.5em;
                 font-size: 3em;
             }
 
@@ -183,7 +183,7 @@
         }
     }
     customElements.define("uccb-booth", Booth);
-    booths.forEach(b => document.body.appendChild(new Booth(b)))
+    directory.forEach(b => document.body.appendChild(new Booth(b)))
 
 </script>
 <script src="nav/nav.js"></script>
