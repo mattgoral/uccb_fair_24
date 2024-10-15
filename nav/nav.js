@@ -70,7 +70,7 @@ class UccbNav extends HTMLElement {
         </div>
         <div id="menu">
             <div><a href="#">About</a></div>
-            <div><a href="/booths.html">Directory</a></div>
+            <div><a href="booths.html">Directory</a></div>
             <div><a href="#">Map</a></div>
         </div>
     </template>`
