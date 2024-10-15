@@ -71,7 +71,7 @@ class UccbNav extends HTMLElement {
     template = `<template>
         <div id="nav-bg">
             <div id="yankee-fair">
-                <a href="/">Yankee Fair</a>
+                <a href="">Yankee Fair</a>
             </div>
             <div id="menu-button">MENU</div>
         </div>
