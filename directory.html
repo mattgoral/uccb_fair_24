@@ -183,13 +183,9 @@
         }
     }
     customElements.define("uccb-booth", Booth);
-    directory.forEach(b => document.body.appendChild(new Booth(b)))
+    booths.forEach(b => document.body.appendChild(new Booth(b)))
 
 </script>
 <script src="nav/nav.js"></script>
-
-<!--<nav>-->
-<!--    <div id="yankee-fair">Yankee Fair</div>-->
-<!--</nav>-->
 </body>
 </html>
