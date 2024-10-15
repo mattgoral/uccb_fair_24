@@ -53,16 +53,13 @@ class UccbNav extends HTMLElement {
           transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
         }
         
-        #menu > div {
-          padding: 10vh 0;
-          font-size: 4em;
-          text-align: center;
-         
-        }
-        
         #menu a {
             text-decoration: none;
             color: #433;
+            padding: 10vh 0;
+            display: block;
+            font-size: 4em;
+            text-align: center;
         }
         
         #menu.open { transform: none }
@@ -76,9 +73,9 @@ class UccbNav extends HTMLElement {
             <div id="menu-button">MENU</div>
         </div>
         <div id="menu">
-            <div><a href="partners.html">Partners</a></div>
-            <div><a href="directory.html">Directory</a></div>
-            <div><a href="map.pdf" target="_blank">Map</a></div>
+            <a href="partners.html">Partners</a>
+            <a href="directory.html">Directory</a>
+            <a href="map.pdf" target="_blank">Map</a>
         </div>
     </template>`
     constructor(open= false) {
