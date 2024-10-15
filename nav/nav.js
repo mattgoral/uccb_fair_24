@@ -23,7 +23,7 @@ class UccbNav extends HTMLElement {
         }
         #nav-bg {
             position: fixed;
-            background: white;
+            background: #674138;
             border-bottom: 1px solid #999;
             display: flex;
             top: 0;
